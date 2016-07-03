@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace DataStructures.BinaryTree
 {
-    public class BinaryTree<T> where T : IComparable
+    public class BinaryTree<T> : IEnumerable<T>
+        where T : IComparable
     {
         private int _count = 0;
 
@@ -260,6 +262,35 @@ namespace DataStructures.BinaryTree
                     ToDepthFirstList(currentNode.Right, list);
                 }
             }
+        }
+
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            var stack = new Stack<BinaryTreeNode<T>>();
+            var discovered = new List<BinaryTreeNode<T>>();
+            stack.Push(Top);
+            while (stack.Count > 0)
+            {
+                var next = stack.Peek();
+                if (next.Left != null && !discovered.Contains(next.Left))
+                {
+                    stack.Push(next.Left);
+                    continue;
+                }
+                next = stack.Pop();
+                discovered.Add(next);
+                yield return next.Value;
+                if (next.Right != null && !discovered.Contains(next.Right))
+                {
+                    stack.Push(next.Right);
+                }
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }
