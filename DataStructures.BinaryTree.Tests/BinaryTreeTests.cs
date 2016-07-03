@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -172,6 +174,121 @@ namespace DataStructures.BinaryTree.Tests
             tree.Remove(8);
             Assert.AreEqual(node12, tree.Top);
             Assert.AreEqual(node6, tree.Top.Left.Left.Left);
+        }
+
+        [TestMethod]
+        public void ToDepthFirstListTest()
+        {
+            var tree = new BinaryTree<int>();
+            var node0 = new BinaryTreeNode<int>(0);
+            var node1 = new BinaryTreeNode<int>(1);
+            var node2 = new BinaryTreeNode<int>(2);
+            var node3 = new BinaryTreeNode<int>(3);
+            var node4 = new BinaryTreeNode<int>(4);
+            var node5 = new BinaryTreeNode<int>(5);
+            var node6 = new BinaryTreeNode<int>(6);
+            var node7 = new BinaryTreeNode<int>(7);
+            var node8 = new BinaryTreeNode<int>(8);
+            var node9 = new BinaryTreeNode<int>(9);
+            var node10 = new BinaryTreeNode<int>(10);
+            var node11 = new BinaryTreeNode<int>(11);
+            var node12 = new BinaryTreeNode<int>(12);
+            var node13 = new BinaryTreeNode<int>(13);
+            var node14 = new BinaryTreeNode<int>(14);
+            var node15 = new BinaryTreeNode<int>(15);
+            var node16 = new BinaryTreeNode<int>(16);
+
+            tree.Add(node8);
+            tree.Add(node4);
+            tree.Add(node12);
+            tree.Add(node2);
+            tree.Add(node6);
+            tree.Add(node10);
+            tree.Add(node14);
+            tree.Add(node1);
+            tree.Add(node3);
+            tree.Add(node5);
+            tree.Add(node7);
+            tree.Add(node9);
+            tree.Add(node11);
+            tree.Add(node13);
+            tree.Add(node15);
+            tree.Add(node0);
+            tree.Add(node16);
+
+            // Structure:
+            //                8
+            //        4               12
+            //    2       6      10        14
+            //  1   3   5   7  9    11  13    15
+            //0                                  16
+
+            var list = tree.ToDepthFirstList();
+
+            for (var i = 0; i < list.Count - 1; i++)
+            {
+                Assert.IsTrue(list[i] < list[i + 1]);
+            }
+        }
+
+        [TestMethod]
+        public void ToBreadthFirstListTest()
+        {
+            var tree = new BinaryTree<int>();
+            var node0 = new BinaryTreeNode<int>(0);
+            var node1 = new BinaryTreeNode<int>(1);
+            var node2 = new BinaryTreeNode<int>(2);
+            var node3 = new BinaryTreeNode<int>(3);
+            var node4 = new BinaryTreeNode<int>(4);
+            var node5 = new BinaryTreeNode<int>(5);
+            var node6 = new BinaryTreeNode<int>(6);
+            var node7 = new BinaryTreeNode<int>(7);
+            var node8 = new BinaryTreeNode<int>(8);
+            var node9 = new BinaryTreeNode<int>(9);
+            var node10 = new BinaryTreeNode<int>(10);
+            var node11 = new BinaryTreeNode<int>(11);
+            var node12 = new BinaryTreeNode<int>(12);
+            var node13 = new BinaryTreeNode<int>(13);
+            var node14 = new BinaryTreeNode<int>(14);
+            var node15 = new BinaryTreeNode<int>(15);
+            var node16 = new BinaryTreeNode<int>(16);
+
+            tree.Add(node8);
+            tree.Add(node4);
+            tree.Add(node12);
+            tree.Add(node2);
+            tree.Add(node6);
+            tree.Add(node10);
+            tree.Add(node14);
+            tree.Add(node1);
+            tree.Add(node3);
+            tree.Add(node5);
+            tree.Add(node7);
+            tree.Add(node9);
+            tree.Add(node11);
+            tree.Add(node13);
+            tree.Add(node15);
+            tree.Add(node0);
+            tree.Add(node16);
+
+            // Structure:
+            //                8
+            //        4               12
+            //    2       6      10        14
+            //  1   3   5   7  9    11  13    15
+            //0                                  16
+
+            var list = tree.ToBreadthFirstList();
+
+            Assert.AreEqual(8, list[0]);
+            Assert.AreEqual(6, list[4]);
+            Assert.AreEqual(10, list[5]);
+            Assert.AreEqual(1, list[7]);
+            Assert.AreEqual(3, list[8]);
+            Assert.AreEqual(13, list[13]);
+            Assert.AreEqual(0, list[15]);
+            Assert.AreEqual(16, list[16]);
+
         }
     }
 }

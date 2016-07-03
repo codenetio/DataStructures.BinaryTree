@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DataStructures.BinaryTree
 {
@@ -213,6 +215,51 @@ namespace DataStructures.BinaryTree
                 }
             }
 
+        }
+
+        public IList<T> ToDepthFirstList()
+        {
+            var list = new List<T>();
+            ToDepthFirstList(Top, list);
+            return list;
+        }
+
+        public IList<T> ToBreadthFirstList()
+        {
+            var list = new List<T>();
+            ToBreadthFirstList(Top, list);
+            return list;
+        }
+
+        private void ToBreadthFirstList(BinaryTreeNode<T> currentNode, IList<T> list)
+        {
+            var queue = new Queue<BinaryTreeNode<T>>();
+            queue.Enqueue(currentNode);
+            while (queue.Count > 0)
+            {
+                var node = queue.Dequeue();
+                list.Add(node.Value);
+                if (node.Left != null) queue.Enqueue(node.Left);
+                if (node.Right != null) queue.Enqueue(node.Right);
+            }
+        }
+
+        private void ToDepthFirstList(BinaryTreeNode<T> currentNode, IList<T> list)
+        {
+            if (currentNode != null)
+            {
+                if (currentNode.Left != null)
+                {
+                    ToDepthFirstList(currentNode.Left, list);
+                }
+
+                list.Add(currentNode.Value);
+
+                if (currentNode.Right != null)
+                {
+                    ToDepthFirstList(currentNode.Right, list);
+                }
+            }
         }
     }
 }
