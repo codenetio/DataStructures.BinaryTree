@@ -103,13 +103,116 @@ namespace DataStructures.BinaryTree
             // Travel down the right leg from the current node
             // since the target value is less than the current value.
             return FindParent(current.Right, value);
-        } 
+        }
 
         public void Remove(T value)
         {
             // find the node.
             var node = Find(Top, value);
+            var parentNode = FindParent(Top, value);
 
-        } 
+            if (parentNode == null)
+            {
+                Top = node.Right;
+                // removing top node, move left side to far left of right side.
+                var lastNode = node.Right.Left;
+                while (lastNode.Left != null)
+                {
+                    lastNode = lastNode.Left;
+                }
+                lastNode.Left = node.Left;
+                return;
+            }
+
+            var isLeft = parentNode.Left == node;
+
+            if (node.Left == null && node.Right == null)
+            {
+                // node is terminal (leaf)
+                if (isLeft)
+                {
+                    parentNode.Left = null;
+                }
+                else
+                {
+                    parentNode.Right = null;
+                }
+            }
+            else if (node.Left == null && node.Right != null)
+            {
+                // left is null, right is not
+                if (isLeft)
+                {
+                    parentNode.Left = node.Right;
+                }
+                else
+                {
+                    parentNode.Right = node.Right;
+                }
+            }
+            else if (node.Right == null && node.Left != null)
+            {
+                // right is null, left is not
+                if (isLeft)
+                {
+                    parentNode.Left = node.Left;
+                }
+                else
+                {
+                    parentNode.Right = node.Left;
+                }
+            }
+            else
+            {
+                // node has left and right branches.
+                if (isLeft)
+                {
+                    var left = node.Left;
+                    var right = node.Right;
+                    parentNode.Left = node.Right;
+
+                    if (right != null)
+                    {
+                        if (right.Left == null)
+                        {
+                            right.Left = left;
+                        }
+                        else
+                        {
+                            var lastNode = right.Left;
+                            while (lastNode.Left != null)
+                            {
+                                lastNode = lastNode.Left;
+                            }
+                            lastNode.Left = left;
+                        }
+                    }
+                }
+                else
+                {
+                    var left = node.Left;
+                    var right = node.Right;
+                    parentNode.Right = node.Left;
+
+                    if (left != null)
+                    {
+                        if (left.Right == null)
+                        {
+                            left.Right = right;
+                        }
+                        else
+                        {
+                            var lastNode = left.Right;
+                            while (lastNode.Right != null)
+                            {
+                                lastNode = lastNode.Right;
+                            }
+                            lastNode.Right = right;
+                        }
+                    }
+                }
+            }
+
+        }
     }
 }

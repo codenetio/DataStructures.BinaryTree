@@ -111,5 +111,67 @@ namespace DataStructures.BinaryTree.Tests
             Assert.AreEqual(node8, tree.FindParent(tree.Top, 4));
 
         }
+
+        [TestMethod]
+        public void RemoveTest()
+        {
+            var tree = new BinaryTree<int>();
+            var node0 = new BinaryTreeNode<int>(0);
+            var node1 = new BinaryTreeNode<int>(1);
+            var node2 = new BinaryTreeNode<int>(2);
+            var node3 = new BinaryTreeNode<int>(3);
+            var node4 = new BinaryTreeNode<int>(4);
+            var node5 = new BinaryTreeNode<int>(5);
+            var node6 = new BinaryTreeNode<int>(6);
+            var node7 = new BinaryTreeNode<int>(7);
+            var node8 = new BinaryTreeNode<int>(8);
+            var node9 = new BinaryTreeNode<int>(9);
+            var node10 = new BinaryTreeNode<int>(10);
+            var node11 = new BinaryTreeNode<int>(11);
+            var node12 = new BinaryTreeNode<int>(12);
+            var node13 = new BinaryTreeNode<int>(13);
+            var node14 = new BinaryTreeNode<int>(14);
+            var node15 = new BinaryTreeNode<int>(15);
+            var node16 = new BinaryTreeNode<int>(16);
+
+            tree.Add(node8);
+            tree.Add(node4);
+            tree.Add(node12);
+            tree.Add(node2);
+            tree.Add(node6);
+            tree.Add(node10);
+            tree.Add(node14);
+            tree.Add(node1);
+            tree.Add(node3);
+            tree.Add(node5);
+            tree.Add(node7);
+            tree.Add(node9);
+            tree.Add(node11);
+            tree.Add(node13);
+            tree.Add(node15);
+            tree.Add(node0);
+            tree.Add(node16);
+
+            // Structure:
+            //                8
+            //        4               12
+            //    2       6      10        14
+            //  1   3   5   7  9    11  13    15
+            //0                                  16
+
+            tree.Remove(4);
+            Assert.AreEqual(node6, tree.Top.Left);
+            Assert.AreEqual(node2, tree.Top.Left.Left.Left);
+
+            tree.Remove(15);
+            Assert.AreEqual(node16, tree.Top.Right.Right.Right);
+
+            tree.Remove(1);
+            Assert.AreEqual(node0, tree.Top.Left.Left.Left.Left);
+
+            tree.Remove(8);
+            Assert.AreEqual(node12, tree.Top);
+            Assert.AreEqual(node6, tree.Top.Left.Left.Left);
+        }
     }
 }
